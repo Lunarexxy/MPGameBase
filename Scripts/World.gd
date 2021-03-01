@@ -14,3 +14,7 @@ func _on_player_connected(peer_id):
 func _on_player_disconnected(peer_id):
 	var player = get_node(str(peer_id))
 	if player != null: player.queue_free()
+
+func _on_server_disconnected():
+	for ply in get_tree().get_nodes_in_group("Players"):
+		ply.queue_free()
