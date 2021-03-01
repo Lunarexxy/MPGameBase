@@ -31,6 +31,11 @@ func _player_disconnected(id:int):
 	emit_signal("player_disconnected", id)
 	
 func _connected_ok():
+	# Add local peer ID to the player list.
+	# "network_peer_connected" signal doesn't fire for local client, and so must be done manually.
+	var local_peer_id:int = get_tree().network_peer.get_unique_id()
+	player_list.append(local_peer_id)
+	emit_signal("player_connected", local_peer_id)
 	emit_signal("connected_to_server")
 
 func _connected_fail():
@@ -51,11 +56,6 @@ func init_client(ip:String, port:int):
 	var err:int = peer.create_client(ip, port)
 	if err == OK:
 		get_tree().network_peer = peer
-		# Add local peer ID to the player list.
-		# "network_peer_connected" signal doesn't fire for local client, and so must be done manually.
-		var local_peer_id:int = get_tree().network_peer.get_unique_id()
-		player_list.append(local_peer_id)
-		emit_signal("player_connected", local_peer_id)
 		
 func stop():
 	get_tree().network_peer = null
