@@ -8,7 +8,7 @@ signal server_disconnected
 
 
 # Holds the player peer IDs. Actual player data is stored in Player nodes.
-# Similar to what you get from SceneTree.network_peer.get_networked_peers(),
+# Similar to what you get from SceneTree.get_network_connected_peers(),
 # but also contains the local client peer ID, and does not contain the server.
 var player_list:Array
 
